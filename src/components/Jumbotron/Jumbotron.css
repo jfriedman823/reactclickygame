@@ -1,7 +1,7 @@
 .jumbotron {
     background: white;
-    height: 26vh;
+    height: 23vh;
     margin-bottom: 0;
-    margin-top: 10vh;
+    padding-top: 2vh;
     text-align: center;
 }

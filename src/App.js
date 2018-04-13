@@ -15,12 +15,36 @@ class App extends Component {
     characters,
     score: "0",
     highScore: "0",
+    guessedCharacters: [],
     guessResult: "Click on an image to begin!"
   };
 
   selectCharacter = id => {
-    console.log(this.state.id);
-  }
+    const selectedCharacter = this.state.characters.find(character => character.id === id);
+    const guessedCharacters = this.state.guessedCharacters;
+
+    if (guessedCharacters.includes(selectedCharacter)) {
+      this.setState({ score: 0 });
+      this.setState({ guessedCharacters: [] });
+      this.setState({ guessResult: "I'm sorry you already guessed that one."});
+    } else {
+      guessedCharacters.push(selectedCharacter);
+      this.setState({ guessedCharacters: guessedCharacters });
+      
+      let currentScore = this.state.score;
+      const currentHighScore = this.state.highScore;
+      currentScore ++;
+      this.setState({ score: currentScore });
+      this.setState({ guessResult: "Good job!" });
+
+      if (currentScore > currentHighScore) {
+        this.setState({ highScore: currentScore});
+      };
+
+    }
+
+    console.log(this.state.guessedCharacters);
+  };
 
 
   render() {
