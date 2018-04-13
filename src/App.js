@@ -19,6 +19,10 @@ class App extends Component {
     guessResult: "Click on an image to begin!"
   };
 
+  componentDidMount() {
+    this.randomCharacterSort(this.state.characters);
+  };
+
   selectCharacter = id => {
     const selectedCharacter = this.state.characters.find(character => character.id === id);
     const guessedCharacters = this.state.guessedCharacters;
@@ -30,7 +34,7 @@ class App extends Component {
     } else {
       guessedCharacters.push(selectedCharacter);
       this.setState({ guessedCharacters: guessedCharacters });
-      
+
       let currentScore = this.state.score;
       const currentHighScore = this.state.highScore;
       currentScore ++;
@@ -43,8 +47,32 @@ class App extends Component {
 
     }
 
-    console.log(this.state.guessedCharacters);
+    this.winCheck();
+    this.randomCharacterSort();
   };
+
+  randomCharacterSort = characters => {
+    const charactersArray = this.state.characters;
+    const randomCharactersOrder = this.shuffle(charactersArray);
+    this.setState({ characters: randomCharactersOrder });
+  }
+
+  shuffle = array => {
+    let i = array.length - 1;
+    for (; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+
+  winCheck = score => {
+    if (this.state.score = 12) {
+      this.setState({ guessResult: "Congratulations, you win!" })
+    }
+  }
 
 
   render() {
